@@ -13,10 +13,10 @@ const EmployeeTableContainer = () => {
 
     const sortAlpha = (e) => {
         function compare(a, b) {
-            if (a.name.first < b.name.first ){
+            if (a.name.first < b.name.first){
               return -1;
             }
-            if ( a.name.first > b.name.first ){
+            if (a.name.first > b.name.first){
               return 1;
             }
             return 0;
@@ -44,7 +44,7 @@ const EmployeeTableContainer = () => {
                 <thead className="thead-dark">
                     <tr>
                         <th scope="col">Photo</th>
-                        <th scope="col"> <button onClick={sortAlpha()}>First</button></th>
+                        <th scope="col"><button onClick={sortAlpha()}>First</button></th>
                         <th scope="col">Last</th>
                         <th scope="col">Phone</th>
                         <th scope="col">Email</th>
