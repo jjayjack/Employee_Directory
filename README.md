@@ -9,8 +9,8 @@ https://hidden-dawn-84467.herokuapp.com/
   - [Installation](#installation)
   - [Usage](#usage)
   - [Credits](#contributes)
-  - [Tests] (#tests)
-  - [Questions] (#questions)
+  - [Tests](#tests)
+  - [Questions](#questions)
 
   ## Installation:
   Once cloned down, start by initializing dependencies through npm i. To run the server with React, run npm start within terminal. The browser will load to localhost and a table of randomly generated employees will be displayed. The user can sort employees by first or last name through the on click features in the heading.
