@@ -2,7 +2,7 @@ import React from 'react'
 
 const Header = () => {
     return (
-        <header className="jumbotron jumbotron-fluid center">
+        <header className="jumbotron jumbotron-fluid">
             <div className="container">
                 <h1 className="display-4">Random Workplace for You</h1>
                 <p className="lead">Employee Directory</p>

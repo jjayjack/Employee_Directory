@@ -1,38 +1,69 @@
-import React, { useEffect, useState, Component } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
 import API from "../utils/API";
-import EmployeeData from "./EmployeeData";
 
 const EmployeeTableContainer = () => {
     const [employees, setEmployees] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchEmp = async () => {
-            const result = await axios(`https://randomuser.me/api/?results=50`)
-            console.log(result.data.results);
-            setEmployees(result.data.results);
-            setIsLoading(false);
-        }
-        fetchEmp()
-    }, [])
     
+    useEffect(() => {
+        API.searchAll()
+        .then(response => {
+            setEmployees(response.data.results);
+        })  .catch(error => {console.log("error getting data" + error)})
+    },[])
+
+    const sortAlpha = (e) => {
+        function compare(a, b) {
+            if (a.name.first < b.name.first ){
+              return -1;
+            }
+            if ( a.name.first > b.name.first ){
+              return 1;
+            }
+            return 0;
+          }
+         var sorted = employees.sort(compare);
+
+         setEmployees([...sorted])
+    }
+
+    const filterAge = (e) => {
+        var peopleFifty = []
+        for (let index = 0; index < employees.length; index++) {
+            const element = employees[index];
+                if (element.dob.age > 50){
+                    peopleFifty.push(element)
+                }
+        }
+        setEmployees([...peopleFifty])
+    }
+
+
     return (
         <div>
             <table className="table">
-                    <thead className="thead-dark">
-                        <tr>
-                            <th scope="col">Photo</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Phone</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Birthday</th>
+                <thead className="thead-dark">
+                    <tr>
+                        <th scope="col">Photo</th>
+                        <th scope="col"> <button onClick={sortAlpha()}>First</button></th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Email</th>
+                        <th scope="col"><button onClick={filterAge()} id="button">Birthday</button></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {employees.map(employee => (
+                        <tr key={employee.login.uuid}>
+                            <img className="img-thumbnail" src={employee.picture.thumbnail} alt={employee.name} />
+                            <td>{employee.name.first}</td>
+                            <td>{employee.name.last}</td>
+                            <td>{employee.phone}</td>
+                            <td>{employee.email}</td>
+                            <td>{employee.dob.date}</td>
                         </tr>
-                    </thead>
-                    <EmployeeData isLoading = {isLoading} employees = {employees}/>
-                </table>
-
+                    ))}
+                </tbody>
+            </table>
         </div>
     )
 }
